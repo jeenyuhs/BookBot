@@ -94,8 +94,7 @@ class CombinableBook:
         )
 
         margin_importance = self.margin**1.15 / 1_000_000
-
-        return (
+        score = (
             1 / difference
             + (
                 self.max.weekly_instant_buys
@@ -104,6 +103,12 @@ class CombinableBook:
                 / 2000
             )
         ) * margin_importance
+
+        # wtf?
+        if not isinstance(score, complex):
+            return score
+
+        return 0
 
     def insert(self, book: Book):
         if book.is_min:
